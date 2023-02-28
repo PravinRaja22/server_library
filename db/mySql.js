@@ -20,7 +20,6 @@ const executeQuery = (query, arrayparams) => {
     try {
       pool.query(query, arrayparams, (err, data) => {
         if (err) {
-          errorcount++;
           console.log("error executing the query : " + err.message)
           return (err)
         }

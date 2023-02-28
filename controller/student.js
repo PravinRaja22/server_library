@@ -35,7 +35,7 @@ const upsertStudentData = async (req, res) => {
     }
 }
 
-const deleteStudentData =async (req,res)=>{
+const deleteStudentData =async (request,res)=>{
     try {
         console.log("inside delete Book Data");
         console.log('query:', request.query.code);
@@ -45,8 +45,35 @@ const deleteStudentData =async (req,res)=>{
         res.send("Student Deleted Successfully")
     }
     catch (err) {
-        console.log("error happenend in Book deletion")
+        console.log("error happenend in student deletion")
         res.send(err.message)
     }
 }
-module.exports = {getStudentData, upsertStudentData,deleteStudentData}
+
+const lookupStudent =async (req,res)=>{
+    try {
+        if(!req.query){
+            var sql ="select FirstName from students limit 5"
+            let getStudentsname = await executeQuery(sql, [])
+            res.send(getStudentsname)
+        }
+
+        else if(req.query.searchKey){
+            var sql ="select _id,FirstName from students WHERE FirstName like '%" + request.query.searchKey + "%'"
+            let getSudentsdata = await executeQuery(sql, [])
+            let studentName=[];
+            getSudentsdata.forEach(element => {
+                studentName.push({
+                    studentName:element.firstName,
+                    id:element._id
+                })
+            });
+            res.send(studentName)
+        }
+    } catch (error) {
+console.log("error in look up students");
+res.send(error.message)
+        
+    }
+}
+module.exports = {getStudentData, upsertStudentData,deleteStudentData,lookupStudent}

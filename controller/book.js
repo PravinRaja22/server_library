@@ -36,8 +36,8 @@ const upsertBooksData = async (req, res) => {
 const deleteBooksData = async (req, res) => {
     try {
         console.log("inside delete Book Data");
-        console.log('query:', request.query.code);
-        let deleteBookdata = request.query.bookid
+        console.log('query:', req.query.code);
+        let deleteBookdata = req.query.bookid
         var sql = 'DELETE FROM Books WHERE _id = ' + deleteBookdata;
         let deleteBookResult = await executeQuery(sql, [])
         res.send("Book Deleted Successfully")
@@ -47,5 +47,7 @@ const deleteBooksData = async (req, res) => {
         res.send(err.message)
     }
 }
+
+
 
 module.exports = { getBooksData, upsertBooksData, deleteBooksData }
