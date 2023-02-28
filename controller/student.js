@@ -1,5 +1,6 @@
 const { executeQuery } = require('../db/mySql')
 const getStudentData = async (req, res) => {
+    console.log("get student data");
     try {
         var sql = "select * from students";
         let getStdentsdata = await executeQuery(sql, [])

@@ -8,13 +8,13 @@ router.use((req, res, next) => {
   next()
 })
 
-router.get('/getStudentData',getStudentData)
-router.get('/upsertSudentData',upsertStudentData)
-router.get('/deleteStudentData',deleteStudentData)
+router.post('/getStudentData',getStudentData)
+router.post('/upsertSudentData',upsertStudentData)
+router.post('/deleteStudentData',deleteStudentData)
 
-router.get('/getBookData',getBooksData)
-router.get('/upsertBookData',upsertBooksData)
-router.get('/deleteBookData',deleteBooksData)
+router.post('/getBookData',getBooksData)
+router.post('/upsertBookData',upsertBooksData)
+router.post('/deleteBookData',deleteBooksData)
 
 
 
