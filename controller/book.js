@@ -16,17 +16,17 @@ const upsertBooksData = async (req, res) => {
         let bookkeys = Object.keys(req.body)
         let bookvalues = Object.values(req.body)
         let result = {}
-        const studentdata = async (fieldname, vlaue) => {
+        const bookData = async (fieldname, vlaue) => {
             for (let i = 0; i < fieldname.length; i++) {
                 result[fieldname[i]] = vlaue[i]
             }
         }
-        studentdata(bookkeys, bookvalues)
+        bookData(bookkeys, bookvalues)
         console.log("result is >>>");
         console.log(result);
         var sql = 'REPLACE INTO Books SET ?'
-        let getStdentsdata = await executeQuery(sql, result)
-        console.log(getStdentsdata);
+        let upsertbookdata = await executeQuery(sql, result)
+        console.log(upsertbookdata);
         res.send("Book Inserted successfully")
     } catch (error) {
         res.send("error page " + error.message)
@@ -48,6 +48,43 @@ const deleteBooksData = async (req, res) => {
     }
 }
 
+const lookupBook = async (request, res) => {
+    try {
+        console.log(request.query);
+        if (!request.query.searchKey) {
+            console.log("inside iff lookup book");
+            var sql = "select BookName,_id from Books limit 5"
+            let getbookname = await executeQuery(sql, [])
+            let bookName = [];
+            getbookname.forEach(element => {
+                console.log(element);
+                bookName.push({
+                    BookName: element.BookName,
+                    id: element._id
+                })
+            });
+            res.send(bookName)
+        }
 
+        else if (request.query.searchKey) {
+            console.log("inisde else book look up " + request.query.searchKey);
+            var sql = "select _id,BookName from Books WHERE BookName like '%" + request.query.searchKey + "%'"
+            let getbookname = await executeQuery(sql, [])
+            let bookName = [];
+            getbookname.forEach(element => {
+                bookName.push({
+                    BookName: element.BookName,
+                    id: element._id
+                })
+            });
+            console.log(bookName);
+            res.send(bookName)
+        }
+    } catch (error) {
+        console.log("error in look up Books " + error.message);
+        res.send(error.message)
 
-module.exports = { getBooksData, upsertBooksData, deleteBooksData }
+    }
+}
+
+module.exports = { getBooksData, upsertBooksData, deleteBooksData,lookupBook}
