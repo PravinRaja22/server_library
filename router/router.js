@@ -12,7 +12,7 @@ router.post('/getStudentData', getStudentData)
 router.post('/upsertSudentData', upsertStudentData)
 router.post('/deleteStudentData', deleteStudentData)
 router.post('/lookupStudent', lookupStudent)
-router.post('/getSingleStudent',updateStudentBookId)
+router.post('/updateStudentBook',updateStudentBookId)
 router.post('/getStudentsbyBookId',getStudentbybookid)
 
 router.post('/getBookData', getBooksData)
@@ -20,7 +20,7 @@ router.post('/upsertBookData', upsertBooksData)
 router.post('/deleteBookData', deleteBooksData)
 router.post('/lookupBook',lookupBook)
 router.post('/updateBookstudent', updateBookstudentId)
-router.post('/getStudentsbyBookId', updateBookstudentId)
+router.post('/getBooksbyStudentId', getBooksbystudentid)
 
 
 

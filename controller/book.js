@@ -92,13 +92,13 @@ const updateBookstudentId =async  (req,res)=>{
     const {bookName,bookRecordId,studentName,studentRecordId} = req.body;
     console.log(bookRecordId);
     try {
-        var sql = 'UPDATE Boooks SET studentRecordId = '+studentRecordId +' WHERE _id = ' +bookRecordId
+        var sql = 'UPDATE Books SET studentRecordId = '+studentRecordId +' WHERE _id = ' +bookRecordId
         let getBooksdata = await executeQuery(sql, [])
         console.log(getBooksdata);
-        var sql ='select * from students where bookRecordId = ' +bookRecordId
-        let getsindleStdentsdata = await executeQuery(sql, []);
-        console.log(getsindleStdentsdata);
-        res.send(getsindleStdentsdata)
+        // var sql ='select * from students where bookRecordId = ' +bookRecordId
+        // let getsindleStdentsdata = await executeQuery(sql, []);
+        // console.log(getsindleStdentsdata);
+        res.send("Book Assigned to the Student Successfully")
        // res.send(getStdentsdata)
 
 
@@ -114,11 +114,11 @@ const updateBookstudentId =async  (req,res)=>{
 const getBooksbystudentid =async  (req,res)=>{
     console.log("get Book by student id  data");
     console.log(req.query);
-   const studentRecordId = req.query.searchId;
+   const bookRecordId = req.query.searchId;
    console.log(bookRecordId);
     try {
        
-        var sql ='select * from Books where bookRecordId = ' +studentRecordId
+        var sql ='select * from Books where studentRecordID = ' +bookRecordId
         let getsinglebookid = await executeQuery(sql, []);
         console.log(getsinglebookid);
         res.send(getsinglebookid)
