@@ -1,4 +1,5 @@
-const { executeQuery } = require('../db/mySql')
+const { executeQuery } = require('../db/mySql');
+const { getStudentbybookid } = require('./student');
 const getBooksData = async (req, res) => {
     try {
         var sql = "select * from Books";
@@ -87,23 +88,19 @@ const lookupBook = async (request, res) => {
     }
 }
 
-const updateBookstudentId =async  (req,res)=>{
+const updateBookstudentId = async (req, res) => {
     console.log("get single student data");
-    const {bookName,bookRecordId,studentName,studentRecordId} = req.body;
+    const { bookName, bookRecordId, studentName, studentRecordId } = req.body;
     console.log(bookRecordId);
     try {
-        var sql = 'UPDATE Books SET studentRecordId = '+studentRecordId +' WHERE _id = ' +bookRecordId
+        var sql = 'UPDATE Books SET studentRecordId = ' + studentRecordId + ' WHERE _id = ' + bookRecordId
         let getBooksdata = await executeQuery(sql, [])
         console.log(getBooksdata);
         // var sql ='select * from students where bookRecordId = ' +bookRecordId
         // let getsindleStdentsdata = await executeQuery(sql, []);
         // console.log(getsindleStdentsdata);
         res.send("Book Assigned to the Student Successfully")
-       // res.send(getStdentsdata)
-
-
-      
-
+        // res.send(getStdentsdata)
     }
     catch (err) {
         console.log('error in Accounts get')
@@ -111,21 +108,30 @@ const updateBookstudentId =async  (req,res)=>{
     }
 }
 
-const getBooksbystudentid =async  (req,res)=>{
+const getBooksbystudentid = async (req, res) => {
     console.log("get Book by student id  data");
     console.log(req.query);
-   const bookRecordId = req.query.searchId;
-   console.log(bookRecordId);
+    const bookRecordId = req.query.searchId;
+    console.log(bookRecordId);
     try {
-       
-        var sql ='select * from Books where studentRecordID = ' +bookRecordId
+
+        var sql = 'select bookRecordId from students where  _id = ' + bookRecordId
         let getsinglebookid = await executeQuery(sql, []);
-        console.log(getsinglebookid);
-        res.send(getsinglebookid)
-       // res.send(getStdentsdata)
+        console.log(getsinglebookid[0].bookRecordId);
+        let arraybooks =[];
+        getsinglebookid.forEach(async  (variable) => {
+            console.log(variable.bookRecordId);
+            var sql = 'select * from books where  _id = ' + variable.bookRecordId
+            let getallbookid =  await executeQuery(sql, []);
+            console.log("inside for loop");
+            console.log(getallbookid);
+           await arraybooks.push(getallbookid)
+            console.log("array is >>>>>");
+            console.log(arraybooks);
+            res.send(arraybooks)
 
-
-      
+        });
+        console.log(arraybooks);
 
     }
     catch (err) {
@@ -133,4 +139,4 @@ const getBooksbystudentid =async  (req,res)=>{
         res.send(err.message)
     }
 }
-module.exports = { getBooksData, upsertBooksData, deleteBooksData,lookupBook,updateBookstudentId,getBooksbystudentid}
+module.exports = { getBooksData, upsertBooksData, deleteBooksData, lookupBook, updateBookstudentId, getBooksbystudentid }

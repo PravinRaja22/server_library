@@ -99,10 +99,6 @@ const updateStudentBookId =async  (req,res)=>{
         console.log(getStdentsdata);
         res.send("Student got that book succesfully")
        // res.send(getStdentsdata)
-
-
-      
-
     }
     catch (err) {
         console.log('error in Accounts get')
@@ -122,10 +118,6 @@ const getStudentbybookid =async  (req,res)=>{
         console.log(getsingleStudentbybookid);
         res.send(getsingleStudentbybookid)
        // res.send(getStdentsdata)
-
-
-      
-
     }
     catch (err) {
         console.log('error in get students by book id get')
