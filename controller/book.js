@@ -89,12 +89,12 @@ const lookupBook = async (request, res) => {
 
 const updateBookstudentId =async  (req,res)=>{
     console.log("get single student data");
-   const {bookName,bookRecordId} = req.body;
-   console.log(bookRecordId);
+    const {bookName,bookRecordId,studentName,studentRecordId} = req.body;
+    console.log(bookRecordId);
     try {
-        var sql = 'UPDATE Books SET bookRecordId = '+bookRecordId +' WHERE _id = ' +studentRecordId
-        let getStdentsdata = await executeQuery(sql, [])
-        console.log(getStdentsdata);
+        var sql = 'UPDATE Boooks SET studentRecordId = '+studentRecordId +' WHERE _id = ' +bookRecordId
+        let getBooksdata = await executeQuery(sql, [])
+        console.log(getBooksdata);
         var sql ='select * from students where bookRecordId = ' +bookRecordId
         let getsindleStdentsdata = await executeQuery(sql, []);
         console.log(getsindleStdentsdata);
@@ -111,4 +111,26 @@ const updateBookstudentId =async  (req,res)=>{
     }
 }
 
-module.exports = { getBooksData, upsertBooksData, deleteBooksData,lookupBook,updateBookstudentId}
+const getBooksbystudentid =async  (req,res)=>{
+    console.log("get Book by student id  data");
+    console.log(req.query);
+   const studentRecordId = req.query.searchId;
+   console.log(bookRecordId);
+    try {
+       
+        var sql ='select * from Books where bookRecordId = ' +studentRecordId
+        let getsinglebookid = await executeQuery(sql, []);
+        console.log(getsinglebookid);
+        res.send(getsinglebookid)
+       // res.send(getStdentsdata)
+
+
+      
+
+    }
+    catch (err) {
+        console.log('error in get students by book id get')
+        res.send(err.message)
+    }
+}
+module.exports = { getBooksData, upsertBooksData, deleteBooksData,lookupBook,updateBookstudentId,getBooksbystudentid}

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { getStudentData, upsertStudentData, deleteStudentData, lookupStudent , updateStudentBookId,getStudentbybookid} = require('../controller/student')
-const { getBooksData, upsertBooksData, deleteBooksData,lookupBook } = require('../controller/book')
+const { getBooksData, upsertBooksData, deleteBooksData,lookupBook,updateBookstudentId,getBooksbystudentid } = require('../controller/book')
 // middleware that is specific to this router
 router.use((req, res, next) => {
   console.log('Time: ', Date.now())
@@ -18,7 +18,9 @@ router.post('/getStudentsbyBookId',getStudentbybookid)
 router.post('/getBookData', getBooksData)
 router.post('/upsertBookData', upsertBooksData)
 router.post('/deleteBookData', deleteBooksData)
-router.post('/lookupBook', lookupBook)
+router.post('/updateBookstudent', lookupBook)
+router.post('/getStudentsbyBookId', updateBookstudentId)
+
 
 
 
