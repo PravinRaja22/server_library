@@ -70,10 +70,10 @@ const lookupStudent = async (request, res) => {
 
         else if (request.query.searchKey) {
             console.log("inisde else " + request.query.searchKey);
-            var sql = "select _id,FirstName from students WHERE FirstName like '%" + request.query.searchKey + "%'"
-            let getSudentsdata = await executeQuery(sql, [])
+            var sql = 'REPLACE INTO students SET ?'
+            let getStdentsdata = await executeQuery(sql, [])
             let studentName = [];
-            getSudentsdata.forEach(element => {
+            getStdentsdata.forEach(element => {
                 studentName.push({
                     studentName: element.FirstName,
                     id: element._id
@@ -88,40 +88,52 @@ const lookupStudent = async (request, res) => {
 
     }
 }
-const updateStudentBookId =async  (req,res)=>{
-    console.log("get single student data");
-   const {bookName,bookRecordId,studentName,studentRecordId} = req.body;
-   console.log(studentRecordId);
-   console.log(bookRecordId);
+const updateStudentBookId = async (req, res) => {
+
     try {
-        var sql = 'UPDATE students SET bookRecordId = '+bookRecordId +' WHERE _id = ' +studentRecordId
-        let getStdentsdata = await executeQuery(sql, [])
-        console.log(getStdentsdata);
+        console.log('update student book id');
+        console.log(req.body);
+        let studentkeys = Object.keys(req.body)
+        let studentvalues = Object.values(req.body)
+        let result = {}
+        const studentdata = async (fieldname, vlaue) => {
+            for (let i = 0; i < fieldname.length; i++) {
+
+                result[fieldname[i]] = vlaue[i]
+            }
+        }
+        studentdata(studentkeys, studentvalues)
+        console.log("result is >>>");
+        console.log(result);
+        var sql = 'REPLACE INTO studentBook SET ?'
+        let getStdentsdata = await executeQuery(sql, result)
         res.send("Student got that book succesfully")
-       // res.send(getStdentsdata)
+        // res.send(getStdentsdata)
     }
+
+
     catch (err) {
         console.log('error in Accounts get')
         res.send(err.message)
     }
 }
 
-const getStudentbybookid =async  (req,res)=>{
+const getStudentbybookid = async (req, res) => {
     console.log("get student by book id  data");
     console.log(req.query);
-   const bookRecordId = req.query.searchId;
-   console.log(bookRecordId);
+    const bookRecordId = req.query.searchId;
+    console.log(bookRecordId);
     try {
-       
-        var sql ='select * from students where bookRecordId = ' +bookRecordId
+
+        var sql = 'select students.*,studentbook.BookName from studentbook , students where studentbook.studentRecordId = students._id and studentbook.bookRecordId = ' + bookRecordId
         let getsingleStudentbybookid = await executeQuery(sql, []);
         console.log(getsingleStudentbybookid);
         res.send(getsingleStudentbybookid)
-       // res.send(getStdentsdata)
+        // res.send(getStdentsdata)
     }
     catch (err) {
         console.log('error in get students by book id get')
         res.send(err.message)
     }
 }
-module.exports = { getStudentData, upsertStudentData, deleteStudentData, lookupStudent,updateStudentBookId,getStudentbybookid }
+module.exports = { getStudentData, upsertStudentData, deleteStudentData, lookupStudent, updateStudentBookId, getStudentbybookid }

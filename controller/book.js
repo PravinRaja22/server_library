@@ -110,28 +110,19 @@ const updateBookstudentId = async (req, res) => {
 
 const getBooksbystudentid = async (req, res) => {
     console.log("get Book by student id  data");
+    console.log('=========================================');
     console.log(req.query);
     const bookRecordId = req.query.searchId;
     console.log(bookRecordId);
     try {
 
-        var sql = 'select bookRecordId from students where  _id = ' + bookRecordId
+        var sql = 'select studentbook.*,students.FirstName from students ,studentbook where studentbook.studentRecordId = students._id and studentbook.studentRecordId =  ' + bookRecordId
         let getsinglebookid = await executeQuery(sql, []);
-        console.log(getsinglebookid[0].bookRecordId);
-        let arraybooks =[];
-        getsinglebookid.forEach(async  (variable) => {
-            console.log(variable.bookRecordId);
-            var sql = 'select * from books where  _id = ' + variable.bookRecordId
-            let getallbookid =  await executeQuery(sql, []);
-            console.log("inside for loop");
-            console.log(getallbookid);
-           await arraybooks.push(getallbookid)
-            console.log("array is >>>>>");
-            console.log(arraybooks);
-            res.send(arraybooks)
+        console.log(getsinglebookid);
+    
 
-        });
-        console.log(arraybooks);
+        res.send(getsinglebookid)
+
 
     }
     catch (err) {
