@@ -87,4 +87,28 @@ const lookupBook = async (request, res) => {
     }
 }
 
-module.exports = { getBooksData, upsertBooksData, deleteBooksData,lookupBook}
+const updateBookstudentId =async  (req,res)=>{
+    console.log("get single student data");
+   const {bookName,bookRecordId} = req.body;
+   console.log(bookRecordId);
+    try {
+        var sql = 'UPDATE Books SET bookRecordId = '+bookRecordId +' WHERE _id = ' +studentRecordId
+        let getStdentsdata = await executeQuery(sql, [])
+        console.log(getStdentsdata);
+        var sql ='select * from students where bookRecordId = ' +bookRecordId
+        let getsindleStdentsdata = await executeQuery(sql, []);
+        console.log(getsindleStdentsdata);
+        res.send(getsindleStdentsdata)
+       // res.send(getStdentsdata)
+
+
+      
+
+    }
+    catch (err) {
+        console.log('error in Accounts get')
+        res.send(err.message)
+    }
+}
+
+module.exports = { getBooksData, upsertBooksData, deleteBooksData,lookupBook,updateBookstudentId}
