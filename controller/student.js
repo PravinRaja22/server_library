@@ -76,7 +76,9 @@ const lookupStudent = async (request, res) => {
             getStdentsdata.forEach(element => {
                 studentName.push({
                     studentName: element.FirstName,
-                    id: element._id
+                    id: element._id,
+                    Department:element.Department,
+                    Year:element.Year
                 })
             });
             console.log(studentName);
