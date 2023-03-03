@@ -55,16 +55,19 @@ const lookupStudent = async (request, res) => {
         console.log(request.query);
         if (!request.query.searchKey) {
             console.log("inside iff");
-            var sql = "select FirstName,_id from students limit 5"
+            var sql = "select * from students limit 5"
             let getStudentsname = await executeQuery(sql, [])
             let studentName = [];
             getStudentsname.forEach(element => {
                 console.log(element);
                 studentName.push({
                     studentName: element.FirstName,
-                    id: element._id
+                    id: element._id,
+                    Department:element.Department,
+                    Year:element.Year
                 })
             });
+            console.log(studentName);
             res.send(studentName)
         }
 
