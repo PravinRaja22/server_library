@@ -116,7 +116,7 @@ const getBooksbystudentid = async (req, res) => {
     console.log(bookRecordId);
     try {
 
-        var sql = 'select studentbook.*,students.FirstName from students ,studentbook where studentbook.studentRecordId = students._id and studentbook.studentRecordId =  ' + bookRecordId
+        var sql = 'select books.*,studentbook.studentName from books ,studentbook where studentbook.bookRecordId = books._id and studentbook.studentRecordId = ' + bookRecordId
         let getsinglebookid = await executeQuery(sql, []);
         console.log(getsinglebookid);
     
