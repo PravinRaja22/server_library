@@ -4,7 +4,7 @@ const deleteStudentBook =async (req,res)=>{
         console.log('query:', req.query.code);
         let deleteStudentBookdata = req.query.code;
         var sql = 'DELETE FROM studentbook WHERE _id = ' + deleteStudentBookdata;
-        let deletestudentsdata= await await executeQuery(sql, [])
+        let deletestudentsdata= await executeQuery(sql, [])
         res.send(deletestudentsdata)
 
 
