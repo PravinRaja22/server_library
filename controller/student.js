@@ -7,7 +7,7 @@ const getStudentData = async (req, res) => {
         res.send(getStdentsdata)
     }
     catch (err) {
-        console.log('error in Accounts get')
+        console.log('error in students get')
         res.send(err.message)
     }
 }

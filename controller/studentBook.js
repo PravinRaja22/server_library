@@ -1,8 +1,13 @@
+const { executeQuery } = require('../db/mySql')
 const deleteStudentBook =async (req,res)=>{
     try{
         console.log('query:', req.query.code);
         let deleteStudentBookdata = req.query.code;
-        
+        var sql = 'DELETE FROM studentbook WHERE _id = ' + deletestudentdata;
+        let deletestudentsdata= await await executeQuery(sql, [])
+        res.send(deletestudentsdata)
+
+
     }
     catch(error){
         console.log("error in delete studentbookobject");
@@ -10,3 +15,4 @@ const deleteStudentBook =async (req,res)=>{
     }
 
 }
+module.exports ={deleteStudentBook}
